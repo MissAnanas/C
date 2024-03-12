@@ -5,12 +5,17 @@
 
 int AskInt()
 {
-    int i;
-    scanf_s("%d", &i);
-    while (getchar() != '\n');
-
-    return i;
-
+    while (1)
+    { 
+        int i;
+        int error = scanf_s("%d", &i);
+        while (getchar() != '\n');
+        if (error == 1)
+        {
+            return i;
+        }
+        printf("Veuillez rentrer un entier !")
+    }
 }
 
 void Play(int randomnumber, int bornemin, int bornemax) {
