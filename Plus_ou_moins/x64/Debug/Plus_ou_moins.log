@@ -1,5 +1,2 @@
-﻿  Plus_ou_moins.c
-C:\Users\wgiron\source\repos\C\Plus_ou_moins\Plus_ou_moins\Plus_ou_moins.c(60,9): warning C4013: 'Play' non défini(e) ; extern retournant int pris par défaut
-C:\Users\wgiron\source\repos\C\Plus_ou_moins\Plus_ou_moins\Plus_ou_moins.c(80,11): warning C4244: 'fonction' : conversion de 'time_t' en 'unsigned int', perte possible de données
-C:\Users\wgiron\source\repos\C\Plus_ou_moins\Plus_ou_moins\Plus_ou_moins.c(113): warning C4716: 'Play' : doit retourner une valeur
-  Plus_ou_moins.vcxproj -> C:\Users\wgiron\source\repos\C\Plus_ou_moins\x64\Debug\Plus_ou_moins.exe
+﻿  Exercices.c
+  Plus_ou_moins.vcxproj -> C:\Users\wgiron\Documents\GitHub\C\x64\Debug\Plus_ou_moins.exe

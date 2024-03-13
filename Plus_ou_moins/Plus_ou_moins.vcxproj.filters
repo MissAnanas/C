@@ -18,5 +18,8 @@
     <ClCompile Include="Plus_ou_moins.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Exercices.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

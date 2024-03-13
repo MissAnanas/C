@@ -34,6 +34,17 @@ char Askchar()
     }  
 }
 
+int Askintbetween(int min, int max, int guess) 
+{
+    while (guess > max || guess < min) 
+    {
+        printf("Enter an integer between %d and %d: ", min, max);
+        guess = Askint();
+    }
+    
+    return guess;
+}
+
 int main() 
 {
     
@@ -79,6 +90,7 @@ int Play(int bornemin, int bornemax, int trylimit)
     {
         printf("\nGuess a number between %d and %d: ", bornemin, bornemax);
         guess = Askint();
+        Askintbetween(bornemin, bornemax, guess);
         guesscount++;
 
         if (guesscount == trylimit)
