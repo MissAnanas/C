@@ -51,12 +51,12 @@ int main()
 
 		printf("\npf1: %f ; pf2: %f", *pf1, *pf2);
 	
-		free(pf1);
 		free(pf2);
+		free(pf1);
 	}
 
 	{
-		float* tf = (float*)malloc(sizeof(float) * 10);
+		float* tf = (float*) malloc(sizeof(float) * 10);
 
 		if (tf == NULL) 
 		{
@@ -82,7 +82,6 @@ int main()
 			printf("%f, ", *(tf + i));
 		}
 
-
 		free(tf);
 	}
 
@@ -106,7 +105,71 @@ int main()
 			printf("%f, ", tf[i]);
 		}
 
-		free(tf);
+	}
+
+	/*{
+		int size;
+
+		printf("\nDonnez une taille de tableau: ");
+		scanf_s("%d", &size);
+
+		int* tab = (int*)malloc(sizeof(int) * size);
+
+		if (tab == NULL) 
+		{
+			exit(1);
+		}
+
+		for (int i = 0; i < size; i++)
+		{
+			printf("Rentrez une valeur:\n[%d] => ", i);
+			scanf_s("%d", &tab[i]);
+		}
+		
+		printf("\ntab: ");
+		for (int i = 0; i < size; i++)
+		{
+			printf("%d, ", tab[i]);
+		}
+		
+		free(tab);
+	}*/
+
+	{
+		int j = 0;
+		int val;
+		int* tab = NULL;
+
+		/*Créer une fonction qui malloc si null et qui realloc si pas null*/
+
+		for (int i = 0; i < j; i++)
+		{
+			printf("\nRentrez une valeur:\n[%d] => ", i);
+			scanf_s("%d", &val);
+
+			if (val != -1) 
+			{
+
+				*(tab + i) = val;
+				j++;
+
+				int* tab2 = (int*)realloc(tab, sizeof(int) * (j + 1));
+
+				if (tab2 == NULL)
+				{
+					free(tab);
+					exit(1);
+				}
+
+				tab = tab2;
+			}
+		}
+
+		printf("\ntab: ");
+		for (int i = 0; i < j; i++)
+		{
+			printf("%d, ", tab[i]);
+		}
 	}
 }
 
