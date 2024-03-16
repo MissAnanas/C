@@ -10,6 +10,33 @@ void func(float* tf)
 
 }
 
+int* mallocorrealloc(int* tab, int j)
+{
+	if (tab == NULL)
+	{
+		tab = (int*)malloc(sizeof(int));
+
+		if (tab == NULL)
+		{
+			exit(1);
+		}
+	}
+	else
+	{
+		int* tab2 = (int*)realloc(tab, sizeof(int) * j);
+
+		if (tab2 == NULL)
+		{
+			free(tab);
+			exit(1);
+		}
+
+		tab = tab2;
+	}
+
+	return tab;
+}
+
 int main() 
 {
 	{
@@ -136,11 +163,11 @@ int main()
 	}*/
 
 	{
-		int j = 0;
+		/*MYSTIFIX LE MAGNIFIQUE est le propriétaire de ce code*/
+		int j = 1;
 		int val;
 		int* tab = NULL;
-
-		/*Créer une fonction qui malloc si null et qui realloc si pas null*/
+		int NoValue = 0;
 
 		for (int i = 0; i < j; i++)
 		{
@@ -149,27 +176,33 @@ int main()
 
 			if (val != -1) 
 			{
+				tab = mallocorrealloc(tab, j);
 
 				*(tab + i) = val;
 				j++;
 
-				int* tab2 = (int*)realloc(tab, sizeof(int) * (j + 1));
+			}
 
-				if (tab2 == NULL)
-				{
-					free(tab);
-					exit(1);
-				}
+			if (j == 1 && val == -1)
+			{
+				NoValue = 1;
+			}
 
-				tab = tab2;
+		}
+
+		if (NoValue == 1) 
+		{
+			printf("Vous n'avez rentrer aucune valeur dans le tableau");
+		}
+		else 
+		{
+			printf("\ntab: ");
+			for (int i = 0; i < 100; i++)
+			{
+				printf("%d, ", tab[i]);
 			}
 		}
 
-		printf("\ntab: ");
-		for (int i = 0; i < j; i++)
-		{
-			printf("%d, ", tab[i]);
-		}
+		free(tab);
 	}
 }
-
