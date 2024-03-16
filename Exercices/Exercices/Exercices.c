@@ -14,7 +14,7 @@ int* mallocorrealloc(int* tab, int j)
 {
 	if (tab == NULL)
 	{
-		tab = (int*)malloc(sizeof(int));
+		tab = (int*)malloc(sizeof(int) * j);
 
 		if (tab == NULL)
 		{
@@ -197,7 +197,7 @@ int main()
 		else 
 		{
 			printf("\ntab: ");
-			for (int i = 0; i < 100; i++)
+			for (int i = 0; i < j - 1; i++)
 			{
 				printf("%d, ", tab[i]);
 			}
