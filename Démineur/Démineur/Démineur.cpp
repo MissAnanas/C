@@ -18,24 +18,17 @@ typedef struct Tile {
 	int CloseBomb;
 } Tile;
 
-typedef struct Grid {
-	Tile cell;
-	int x;
-	int y;
-} Grid;
-
 void InitGrid() {
 	
 }
 
+void PrintGrid() {
 
+}
 
 
 int main() {
-	Grid grid;
 
-	grid.x = 0;
-	grid.y = 0;
 
 	return 0;
 }
