@@ -9,17 +9,20 @@ typedef struct {
 	int close_mine;
 } Tile;
 
+
 typedef struct {
 	int row;
 	int col;
 	Tile** tile; // Tableau 2D de cases
 } Grid;
 
+
 void InitTile(Tile* tile) {
 	tile->is_mine = 0;
 	tile->is_reveal = 0;
 	tile->close_mine = 0;
 }
+
 
 void InitGrid(Grid* Grid, int row, int col) {
 	Grid->row = row;
@@ -40,7 +43,8 @@ void InitGrid(Grid* Grid, int row, int col) {
 	}
 }
 
-void PlaceMines(Grid* Grid, int num_mines) {
+
+void PlaceMines(Grid* grid, int num_mines) {
 	srand(time(NULL));
 
 	int row;
@@ -48,28 +52,34 @@ void PlaceMines(Grid* Grid, int num_mines) {
 	int mines_placed = 0;
 
 	while (mines_placed < num_mines) {
-		row = rand() % Grid->row;
-		col = rand() % Grid->col;
+		row = rand() % grid->row;
+		col = rand() % grid->col;
 
-		if (Grid->tile[row][col].is_mine == 0) {
-			Grid->tile[row][col].is_mine = 1;
+		if (grid->tile[row][col].is_mine == 0) {
+			grid->tile[row][col].is_mine = 1;
 			mines_placed++;
 		}
 	} 
 }
 
-void PrintGrid(Grid* Grid) {
+
+void PrintGrid(Grid* grid) {
 	int tile_number = 1;
 
-	for (int x = 0; x < Grid->row; x++) {
-		for (int y = 0; y < Grid->col; y++) {
+	for (int x = 0; x < grid->row; x++) {
+		for (int y = 0; y < grid->col; y++) {
 
-			if (Grid->tile[x][y].is_reveal == 1) {
-				if (Grid->tile[x][y].is_mine == 1) {
-					printf("* ");
+			if (grid->tile[x][y].is_reveal == 1) {
+				if (grid->tile[x][y].is_mine == 1) {
+					printf("  *  |");
 				}
 				else {
-					printf("%d ", Grid->tile[x][y].close_mine);
+					if (grid->tile[x][y].close_mine == 0) {
+						printf("     |");
+					}
+					else {
+						printf(" %3d |", grid->tile[x][y].close_mine);
+					}
 				}
 			}
 			else {
@@ -82,15 +92,33 @@ void PrintGrid(Grid* Grid) {
 	}
 }
 
-void AskCoord(Grid* Grid, int* row, int* col) {
+
+void RevealTile(Grid* grid, int rowx, int coly) {
+	if (rowx < 0 || coly < 0 || rowx >= grid->row || coly >= grid->col) return;
+
+	if (grid->tile[rowx][coly].is_reveal == 1) return;
+
+	grid->tile[rowx][coly].is_reveal = 1;
+
+	if (grid->tile[rowx][coly].close_mine > 0) return;
+
+	for (int i = -1; i <= 1; ++i) {
+		for (int j = -1; j <= 1; ++j) {
+			RevealTile(grid, rowx + i, coly + j);
+		}
+	}
+}
+
+
+void AskCoord(Grid* grid, int* rowx, int* coly) {
 	int select_tile;
 
 	while (1) {
 		printf("Entrez un numero de tuile : ");
 		if (scanf_s("%d", &select_tile) == 1) {
-			if (select_tile >= 1 && select_tile <= Grid->row * Grid->col) {
-				*row = (select_tile - 1) / Grid->col;
-				*col = (select_tile - 1) % Grid->col;
+			if (select_tile >= 1 && select_tile <= grid->row * grid->col) {
+				*rowx = (select_tile - 1) / grid->col;
+				*coly = (select_tile - 1) % grid->col;
 				break;
 			}
 			else {
@@ -102,26 +130,30 @@ void AskCoord(Grid* Grid, int* row, int* col) {
 			printf("Saisie Invalide !\n");
 		}
 	}
+
+	RevealTile(grid, *rowx, *coly);
 }
 
+
 int main() {
-	Grid Grid;
+	Grid grid;
 
 	int rows = 16;
 	int cols = 40;
 	int num_mines = 99;
 
-	InitGrid(&Grid, rows, cols);
-	PlaceMines(&Grid, num_mines);
-	PrintGrid(&Grid);
+	InitGrid(&grid, rows, cols);
+	PlaceMines(&grid, num_mines);
+	PrintGrid(&grid);
 
+	while (1) {
+		int rowx;
+		int coly;
+		AskCoord(&grid, &rowx, &coly);
 
-	int row;
-	int col;
-
-	AskCoord(&Grid, &row, &col);
-
-
+		PrintGrid(&grid);
+	}
+	
 	return 0;
 }
 
