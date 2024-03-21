@@ -157,7 +157,7 @@ void AskCoord(Grid* grid, int* rowx, int* coly) {
 	int select_tile;
 
 	while (1) {
-		printf("Entrez un numero de tuile : ");
+		printf("\nEntrez un numero de tuile : ");
 		if (scanf_s("%d", &select_tile) == 1) {
 			if (select_tile >= 1 && select_tile <= grid->row * grid->col) {
 				*rowx = (select_tile - 1) / grid->col;
