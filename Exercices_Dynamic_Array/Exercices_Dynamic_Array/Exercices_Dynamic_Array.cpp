@@ -27,7 +27,7 @@ void Insert(IntArray* pIntArray, int iValue, int iIndex) {
     }
 
     if (pIntArray->iSize >= pIntArray->ICapacity) {
-        pIntArray->ICapacity = pIntArray->iSize * 2;
+        pIntArray->ICapacity *= 2;
 
         int* tab = (int*)realloc(pIntArray->pContent, pIntArray->ICapacity * sizeof(int));
         if (tab == NULL) {
@@ -37,14 +37,14 @@ void Insert(IntArray* pIntArray, int iValue, int iIndex) {
         pIntArray->pContent = tab;
     }
 
-    if (pIntArray->pContent[iIndex] != NULL) {
-        for (int i = pIntArray->iSize; i > iIndex - 1; i--) {
-            *(pIntArray->pContent + (i + 1)) = *(pIntArray->pContent + i);
-
+    if (pIntArray->iSize > 0) 
+    {
+        for (int i = pIntArray->iSize - 1; i >= iIndex; i--) {
+            pIntArray->pContent[i + 1] = pIntArray->pContent[i];
         }
     }
-
-    *(pIntArray->pContent + iIndex) = iValue;
+    
+    pIntArray->pContent[iIndex] = iValue;
     pIntArray->iSize++;
 }
 
@@ -66,6 +66,19 @@ void Remove(IntArray* pIntArray, int iIndex) {
 
     if (pIntArray->iSize < pIntArray->ICapacity / 2) {
         pIntArray->ICapacity = pIntArray->ICapacity / 2;
+        int* tab = (int*)realloc(pIntArray->pContent, pIntArray->ICapacity * sizeof(int));
+        if (tab == NULL) {
+            free(pIntArray->pContent);
+            exit(1);
+        }
+        pIntArray->pContent = tab;
+    }
+}
+
+void Get(IntArray* pIntArray, int iIndex) {
+    if (iIndex > pIntArray->iSize) {
+        printf("L'index est en dehors du tableau\n");
+        return;
     }
 }
 
@@ -79,12 +92,11 @@ void Print(IntArray* pIntArray) {
 }
 
 void Destroy(IntArray* pIntArray) {
-    free(pIntArray);
+    free(pIntArray->pContent);
 }
 
 int main() {
     IntArray pIntArray;
-
 
     Init(&pIntArray);
 
