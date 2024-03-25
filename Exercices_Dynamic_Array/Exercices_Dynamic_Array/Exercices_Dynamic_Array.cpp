@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 // Dynamic Array
 
 typedef struct IntArray {
@@ -21,6 +22,9 @@ void Init(IntArray* pIntArray) {
 }
 
 void Insert(IntArray* pIntArray, int iValue, int iIndex) {
+    {
+        #pragma warning( disable : 6001 )
+    }
     if (iIndex > pIntArray->iSize) {
         printf("L'index %d pour la valeur %d est en dehors du tableau\n", iIndex, iValue);
         return;
@@ -29,7 +33,8 @@ void Insert(IntArray* pIntArray, int iValue, int iIndex) {
     if (pIntArray->iSize >= pIntArray->ICapacity) {
         pIntArray->ICapacity *= 2;
 
-        int* tab = (int*)realloc(pIntArray->pContent, pIntArray->ICapacity * sizeof(int));
+        int* tab = NULL;
+        tab = (int*)realloc(pIntArray->pContent, pIntArray->ICapacity * sizeof(int));
         if (tab == NULL) {
             free(pIntArray->pContent);
             exit(1);
@@ -113,6 +118,7 @@ int main() {
     Add(&pIntArray, 101);
 
     Insert(&pIntArray, 50, 5);
+
     Print(&pIntArray);
 
     Remove(&pIntArray, 6);
