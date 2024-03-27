@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct String {
     char* pContent;
@@ -137,27 +138,36 @@ int AreEquals(const String* pStr1, const String* pStr2) {
 }
 
 int IsDigit(const String* pStr, int iIndex) {
+    if (pStr->pContent[iIndex] >= '0' && pStr->pContent[iIndex] <= '9') {
+        return 1;
+    }
 
+    return 0;
 }
 
+
 int TryCastToInt(const String* pStr1, int* presult) {
-    char Checktab[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    int intTab[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
     for (int i = 0; i < pStr1->iLength; i++) {
-        for (int j = 0; j < 10; j++) {
-            if (pStr1->pContent[i] != Checktab[j]) {
-                continue;
-            }
-            else {
-
-
-                break;
-            }
-            
-            
+        if (IsDigit(pStr1, i) == 1) {
+            continue;
+        }
+        else {
+            return 0;
         }
     }
+
+    int num;
+    int position;
+    int stocknum = 0;
+    for (int i = 0; i < pStr1->iLength; i++) {
+        position = 1 * pow(10, pStr1->iLength - 1 - i);
+        num = (pStr1->pContent[i] - '0') * position;
+        stocknum += num;
+    }
+
+    *presult = stocknum;
+
+    return 1;
 }
 
 
@@ -198,6 +208,13 @@ int main()
     isEqual = AreEquals(&stringA, &stringAP);
     printf("%d", isEqual);
 
+    String numstring = Create("1234");
+
+    int i;
+    int success = TryCastToInt(&numstring, &i);
+    if(success)
+        printf("\n%d", i); //1234
+
 
     Destroy(&stringA);
     Destroy(&stringAP);
@@ -206,6 +223,7 @@ int main()
     Destroy(&LoveString);
     Destroy(&stringC);
     Destroy(&cutstring);
+    Destroy(&numstring);
 
     return 0;
 }

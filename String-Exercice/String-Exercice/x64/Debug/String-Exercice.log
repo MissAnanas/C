@@ -1,2 +1,3 @@
 ﻿  String-Exercice.c
+C:\Users\wgiron\Documents\GitHub\C\String-Exercice\String-Exercice\String-Exercice.c(163,22): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
   String-Exercice.vcxproj -> C:\Users\wgiron\Documents\GitHub\C\String-Exercice\x64\Debug\String-Exercice.exe
